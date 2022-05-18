@@ -33,8 +33,8 @@ export default function App() {
 
   return (
     <View style={styles.appContainer}>
-      <StatusBar style="auto" />
-      <Button title="Add New Goal" color="#5e0acc" onPress={openGoalModal} />
+      <StatusBar style="light" />
+      <Button title="Add New Goal" color="#b180f0" onPress={openGoalModal} />
       {
         <GoalInput
           visible={modalIsVisible}
