@@ -1,6 +1,6 @@
 import {useState} from "react"
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, ScrollView, FlatList } from 'react-native';
 
 export default function App() {
   const [enteredGoalText, setEnteredGoalText] = useState('')
@@ -11,7 +11,7 @@ export default function App() {
   }
   
   function addGoalHandler() {
-    setCourseGoals((currentCourseGoals) => [...currentCourseGoals, enteredGoalText])
+    setCourseGoals((currentCourseGoals) => [...currentCourseGoals, {text: enteredGoalText, id: Math.random().toString()}])
   }
 
   return (
@@ -26,7 +26,19 @@ export default function App() {
         <Button title="Add Goal" onPress={addGoalHandler} />
       </View>
       <View style={styles.goalsContainer}>
-        {courseGoals.map((goal) => <Text key={goal}>{goal}</Text>)}
+        <FlatList data={courseGoals} renderItem={(itemData) => {
+          return(
+          <View style={styles.goalItem}>
+              <Text style={styles.goalText}>
+                {itemData.item.text}
+              </Text>
+            </View>
+          )
+        }}
+          keyExtractor={(item, index) => {
+            return item.id
+        }}
+        />
       </View>
     </View>
   );
@@ -56,6 +68,16 @@ const styles = StyleSheet.create({
   },
   goalsContainer: {
     flex: 5
+  },
+  goalItem: {
+    margin: 8,
+    padding: 8,
+    borderRadius: 4,
+    borderWidth: 1,
+    backgroundColor: "#5e0acc",
+  },
+  goalText: {
+    color: "white"
   }
 });
 
